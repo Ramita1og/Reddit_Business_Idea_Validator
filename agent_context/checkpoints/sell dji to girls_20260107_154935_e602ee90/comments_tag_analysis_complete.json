@@ -1,0 +1,642 @@
+{
+  "tag_analysis": {
+    "success": true,
+    "tag_analysis": {
+      "crowd_scenario": {},
+      "functional_value": {
+        "产品功能-核心能力": [
+          "防水功能",
+          "传感器尺寸"
+        ],
+        "性能表现-核心指标": [
+          "库存情况",
+          "市场需求"
+        ],
+        "技术特性-技术优势": [
+          "产品创新",
+          "技术迭代"
+        ]
+      },
+      "assurance_value": {
+        "可靠性-质量保证": [
+          "产品稳定性",
+          "质量保证"
+        ],
+        "服务支持-客户服务": [
+          "库存管理",
+          "用户反馈"
+        ],
+        "生态支持-社区商业": [
+          "市场策略",
+          "国际市场影响"
+        ]
+      },
+      "experience_value": {
+        "用户体验-易用性": [
+          "产品尺寸",
+          "-产品尺寸",
+          "-易用性"
+        ],
+        "社区氛围-讨论质量": [
+          "用户反馈",
+          "社区反应",
+          "-社区反应"
+        ],
+        "推荐意愿-使用意向": [
+          "购买意愿",
+          "推荐给他人"
+        ]
+      },
+      "total_posts_analyzed": 17,
+      "total_tags_applied": 50,
+      "analysis_summary": "基于 17 个帖子的评论生成的标签体系，共应用 50 个标签",
+      "tag_statistics": {
+        "产品功能-核心能力": {
+          "防水功能": 1,
+          "传感器尺寸": 1
+        },
+        "性能表现-核心指标": {
+          "库存情况": 2,
+          "市场需求": 3
+        },
+        "技术特性-技术优势": {
+          "产品创新": 3,
+          "技术迭代": 2
+        },
+        "可靠性-质量保证": {
+          "产品稳定性": 2,
+          "质量保证": 2
+        },
+        "服务支持-客户服务": {
+          "库存管理": 4,
+          "用户反馈": 1
+        },
+        "生态支持-社区商业": {
+          "市场策略": 3,
+          "国际市场影响": 1
+        },
+        "用户体验-易用性": {
+          "产品尺寸": 1,
+          "-产品尺寸": 1,
+          "-易用性": 1
+        },
+        "社区氛围-讨论质量": {
+          "用户反馈": 13,
+          "社区反应": 3,
+          "-社区反应": 1
+        },
+        "推荐意愿-使用意向": {
+          "购买意愿": 4,
+          "推荐给他人": 1
+        }
+      },
+      "persona_analysis": {
+        "personas": [
+          {
+            "gender": "女性",
+            "age_estimate": "20-30岁",
+            "demand_keywords": [
+              "防水",
+              "可用性",
+              "库存",
+              "传感器",
+              "尺寸"
+            ],
+            "purchase_motivation": [
+              "产品创新",
+              "实用性",
+              "功能更新",
+              "便捷性",
+              "需求满足"
+            ],
+            "emotional_tone": "中性",
+            "persona_tags": [
+              "新技术爱好者",
+              "关注产品更新",
+              "功能导向",
+              "需求明确",
+              "实用消费者"
+            ]
+          },
+          {
+            "gender": "男性",
+            "age_estimate": "30-40岁",
+            "demand_keywords": [
+              "市场需求",
+              "库存",
+              "品牌",
+              "销售状况",
+              "市场策略"
+            ],
+            "purchase_motivation": [
+              "市场流行",
+              "品牌忠诚",
+              "需求迫切",
+              "销售趋势",
+              "产品可靠"
+            ],
+            "emotional_tone": "中性",
+            "persona_tags": [
+              "市场观察者",
+              "品牌追随者",
+              "关注库存",
+              "实地购买者",
+              "趋势导向"
+            ]
+          },
+          {
+            "gender": "不确定",
+            "age_estimate": "25-35岁",
+            "demand_keywords": [
+              "库存",
+              "购买渠道",
+              "市场竞争",
+              "产品周期",
+              "创新"
+            ],
+            "purchase_motivation": [
+              "市场趋势",
+              "产品更新",
+              "竞争优势",
+              "购买便利",
+              "信息获取"
+            ],
+            "emotional_tone": "中性",
+            "persona_tags": [
+              "理性消费者",
+              "策略性购买",
+              "信息灵通",
+              "关注市场动态",
+              "购买决策深思熟虑"
+            ]
+          }
+        ],
+        "total_personas": 3,
+        "analysis_summary": "基于评论内容生成的典型用户画像分析"
+      }
+    },
+    "analyzed_results": [
+      {
+        "note_id": "1k0s8p2",
+        "title": "DJI Osmo Pocket 4: Rumors and Speculations - DJI Osmo Pocket 3 low in stock or not?",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [
+              "防水功能",
+              "传感器尺寸"
+            ],
+            "性能表现-核心指标": [
+              "库存情况",
+              "市场需求"
+            ],
+            "技术特性-技术优势": [
+              "产品创新"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [],
+            "服务支持-客户服务": [
+              "库存管理"
+            ],
+            "生态支持-社区商业": [
+              "市场策略",
+              "国际市场影响"
+            ]
+          },
+          "体验价值": {
+            "用户体验-易用性": [
+              "产品尺寸"
+            ],
+            "社区氛围-讨论质量": [
+              "用户反馈"
+            ],
+            "推荐意愿-使用意向": [
+              "购买意愿"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1ovilfm",
+        "title": "Best Gift Ideas for Men",
+        "comments_count": 6,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {},
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "用户反馈"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1pckwi0",
+        "title": "Best Gift Ideas for Her (Wife/Girlfriend)",
+        "comments_count": 2,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {},
+          "体验价值": {
+            "推荐意愿-使用意向": [
+              "推荐给他人"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1n3lk0o",
+        "title": "Pussy Cats",
+        "comments_count": 5,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {},
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "社区反应"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "87vokv",
+        "title": "[REVIEW] 24KG OF LOVE 💖💖 (Fear of God, Gucci, Off-White + MORE!)",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [],
+            "性能表现-核心指标": [],
+            "技术特性-技术优势": []
+          },
+          "保障价值": {
+            "可靠性-质量保证": [
+              "产品稳定性"
+            ],
+            "服务支持-客户服务": [],
+            "生态支持-社区商业": []
+          },
+          "体验价值": {
+            "用户体验-易用性": [],
+            "社区氛围-讨论质量": [
+              "用户反馈",
+              "-社区反应"
+            ],
+            "推荐意愿-使用意向": []
+          }
+        }
+      },
+      {
+        "note_id": "19451rx",
+        "title": "r/popheads AOTY 2023 #8: Troye Sivan - Something to Give Each Other",
+        "comments_count": 18,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {},
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "用户反馈",
+              "社区反应"
+            ],
+            "推荐意愿-使用意向": [
+              "购买意愿"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1471rcz",
+        "title": "Wall Street Newsletter S03E01: Complacency or Disbelief?",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {},
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "用户反馈"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "12urpkj",
+        "title": "The Real Policy Behind DJI CARE Refresh.",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "性能表现-核心指标": [
+              "库存情况"
+            ],
+            "技术特性-技术优势": [
+              "技术迭代"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [
+              "质量保证"
+            ],
+            "服务支持-客户服务": [
+              "库存管理"
+            ]
+          },
+          "体验价值": {
+            "用户体验-易用性": [],
+            "社区氛围-讨论质量": [
+              "用户反馈"
+            ],
+            "推荐意愿-使用意向": []
+          }
+        }
+      },
+      {
+        "note_id": "1gy2n3z",
+        "title": "Best way to sell Avata 2 without Goggles",
+        "comments_count": 2,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {
+            "服务支持-客户服务": [
+              "库存管理"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "用户反馈"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1b49lc5",
+        "title": "What to do with a fun, functioning Flamewheel F550 hexa / Naza M FC / 8x 2212 motors ",
+        "comments_count": 4,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [],
+            "性能表现-核心指标": [],
+            "技术特性-技术优势": [
+              "产品创新"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [],
+            "服务支持-客户服务": [],
+            "生态支持-社区商业": []
+          },
+          "体验价值": {
+            "用户体验-易用性": [
+              "-产品尺寸"
+            ],
+            "社区氛围-讨论质量": [],
+            "推荐意愿-使用意向": []
+          }
+        }
+      },
+      {
+        "note_id": "10xledq",
+        "title": "[S][USA-WA] DJI Mavic Air (F22 Raptor Skin) Bundle",
+        "comments_count": 3,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {
+            "服务支持-客户服务": [
+              "用户反馈"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "用户反馈"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "ayh7g7",
+        "title": "Customer got a bent iPhone XS Max out of the box...",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "技术特性-技术优势": [
+              "产品创新"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [
+              "质量保证"
+            ],
+            "服务支持-客户服务": [
+              "库存管理"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "用户反馈"
+            ],
+            "推荐意愿-使用意向": [
+              "购买意愿"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "lcjb2q",
+        "title": "I'm so retarded that I need help from others, or my banana will pay the price...",
+        "comments_count": 10,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "性能表现-核心指标": [
+              "市场需求"
+            ]
+          },
+          "保障价值": {
+            "生态支持-社区商业": [
+              "市场策略"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "用户反馈",
+              "社区反应"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "a33xze",
+        "title": "Looking for a new job; if you hear about an opening, please let me know.",
+        "comments_count": 4,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {},
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "用户反馈"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "8sapgq",
+        "title": "[USA-MD][H] DJI Mavic Pro [W] Paypal",
+        "comments_count": 14,
+        "tags": {},
+        "error": "LLM response validation failed: 1 validation error for TagSystemGeneration\n功能价值.保障价值\n  Input should be a valid list [type=list_type, input_value={'服务支持-客户服务': ['物流配送']}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/list_type",
+        "error_type": "ValueError"
+      },
+      {
+        "note_id": "6gwqb7",
+        "title": "DJI GO iPhone 5 compatibility",
+        "comments_count": 18,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [],
+            "性能表现-核心指标": [
+              "市场需求"
+            ],
+            "技术特性-技术优势": [
+              "技术迭代"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [
+              "产品稳定性"
+            ],
+            "服务支持-客户服务": [],
+            "生态支持-社区商业": []
+          },
+          "体验价值": {
+            "用户体验-易用性": [
+              "-易用性"
+            ],
+            "社区氛围-讨论质量": [
+              "用户反馈"
+            ],
+            "推荐意愿-使用意向": [
+              "购买意愿"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "mtvr96",
+        "title": "7 Months (long but i really need it to write it)",
+        "comments_count": 1,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {
+            "生态支持-社区商业": [
+              "市场策略"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "用户反馈"
+            ]
+          }
+        }
+      }
+    ],
+    "total_posts_analyzed": 17,
+    "total_comments": 187,
+    "persona_analysis": {
+      "personas": [
+        {
+          "gender": "女性",
+          "age_estimate": "20-30岁",
+          "demand_keywords": [
+            "防水",
+            "可用性",
+            "库存",
+            "传感器",
+            "尺寸"
+          ],
+          "purchase_motivation": [
+            "产品创新",
+            "实用性",
+            "功能更新",
+            "便捷性",
+            "需求满足"
+          ],
+          "emotional_tone": "中性",
+          "persona_tags": [
+            "新技术爱好者",
+            "关注产品更新",
+            "功能导向",
+            "需求明确",
+            "实用消费者"
+          ]
+        },
+        {
+          "gender": "男性",
+          "age_estimate": "30-40岁",
+          "demand_keywords": [
+            "市场需求",
+            "库存",
+            "品牌",
+            "销售状况",
+            "市场策略"
+          ],
+          "purchase_motivation": [
+            "市场流行",
+            "品牌忠诚",
+            "需求迫切",
+            "销售趋势",
+            "产品可靠"
+          ],
+          "emotional_tone": "中性",
+          "persona_tags": [
+            "市场观察者",
+            "品牌追随者",
+            "关注库存",
+            "实地购买者",
+            "趋势导向"
+          ]
+        },
+        {
+          "gender": "不确定",
+          "age_estimate": "25-35岁",
+          "demand_keywords": [
+            "库存",
+            "购买渠道",
+            "市场竞争",
+            "产品周期",
+            "创新"
+          ],
+          "purchase_motivation": [
+            "市场趋势",
+            "产品更新",
+            "竞争优势",
+            "购买便利",
+            "信息获取"
+          ],
+          "emotional_tone": "中性",
+          "persona_tags": [
+            "理性消费者",
+            "策略性购买",
+            "信息灵通",
+            "关注市场动态",
+            "购买决策深思熟虑"
+          ]
+        }
+      ],
+      "total_personas": 3,
+      "analysis_summary": "基于评论内容生成的典型用户画像分析"
+    }
+  }
+}
