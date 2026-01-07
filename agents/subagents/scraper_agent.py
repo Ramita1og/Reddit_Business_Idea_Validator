@@ -126,7 +126,7 @@ class ScraperAgent(BaseAgent):
         kwargs: Dict[str, Any]
     ) -> Dict[str, Any]:
         """
-        搜索笔记
+        搜索帖子
 
         Args:
             context: 执行上下文
@@ -134,7 +134,7 @@ class ScraperAgent(BaseAgent):
                 - keyword: 搜索关键词
                 - pages: 搜索页数 (默认2)
                 - sort: 排序方式 (默认general)
-                - note_type: 笔记类型 (默认_0)
+                - note_type: 帖子类型 (默认_0)
 
         Returns:
             搜索结果
@@ -159,7 +159,7 @@ class ScraperAgent(BaseAgent):
         )
 
         if result.get("success"):
-            self.update_progress("searching", 1.0, f"搜索完成，找到 {result['total_count']} 条笔记")
+            self.update_progress("searching", 1.0, f"搜索完成，找到 {result['total_count']} 条帖子")
         else:
             self.update_progress("searching", 1.0, f"搜索失败: {result.get('error', 'Unknown')}")
 
@@ -176,19 +176,19 @@ class ScraperAgent(BaseAgent):
         Args:
             context: 执行上下文
             kwargs: 参数
-                - note_id: 笔记 ID
+                - post_id: 帖子 ID
                 - limit: 最大评论数 (默认50)
 
         Returns:
             评论结果
         """
-        note_id = context.get("note_id", kwargs.get("note_id", ""))
+        post_id = context.get("post_id", kwargs.get("post_id", ""))
         limit = kwargs.get("limit", 50)
 
-        if not note_id:
-            raise ValueError("note_id is required")
+        if not post_id:
+            raise ValueError("post_id is required")
 
-        self.update_progress("fetching_comments", 0.5, f"正在获取笔记 {note_id} 的评论...")
+        self.update_progress("fetching_comments", 0.5, f"正在获取帖子 {post_id} 的评论...")
 
         # 调用 skill
         result = await get_comments_skill(self, note_id, limit)
@@ -212,13 +212,13 @@ class ScraperAgent(BaseAgent):
             context: 执行上下文
             kwargs: 参数
                 - note_ids: 笔记 ID 列表
-                - comments_per_note: 每个笔记的评论数 (默认20)
+                - comments_per_post: 每个帖子的评论数 (默认20)
 
         Returns:
             批量评论结果
         """
         note_ids = context.get("note_ids", kwargs.get("note_ids", []))
-        comments_per_note = kwargs.get("comments_per_note", 20)
+        comments_per_post = kwargs.get("comments_per_post", 20)
 
         if not note_ids:
             raise ValueError("note_ids is required")
@@ -230,7 +230,7 @@ class ScraperAgent(BaseAgent):
         )
 
         # 调用 skill
-        result = await batch_get_comments_skill(self, note_ids, comments_per_note)
+        result = await batch_get_comments_skill(self, note_ids, comments_per_post)
 
         if result.get("success"):
             self.update_progress(
@@ -260,7 +260,7 @@ class ScraperAgent(BaseAgent):
             kwargs: 参数
                 - keywords: 关键词列表
                 - pages_per_keyword: 每个关键词的搜索页数 (默认2)
-                - comments_per_note: 每个笔记的评论数 (默认20)
+                - comments_per_post: 每个帖子的评论数 (默认20)
                 - max_notes: 最大笔记数 (默认20)
 
         Returns:
@@ -268,7 +268,7 @@ class ScraperAgent(BaseAgent):
         """
         keywords = context.get("keywords", kwargs.get("keywords", []))
         pages_per_keyword = kwargs.get("pages_per_keyword", 2)
-        comments_per_note = kwargs.get("comments_per_note", 20)
+        comments_per_post = kwargs.get("comments_per_post", 20)
         max_notes = kwargs.get("max_notes", 20)
 
         if not keywords:
@@ -285,7 +285,7 @@ class ScraperAgent(BaseAgent):
             self,
             keywords=keywords,
             pages_per_keyword=pages_per_keyword,
-            comments_per_note=comments_per_note,
+            comments_per_post=comments_per_post,
             max_notes=max_notes,
             progress_callback=self._progress_callback
         )
@@ -333,7 +333,7 @@ class ScraperAgent(BaseAgent):
             kwargs: 参数
                 - keywords: 关键词列表
                 - pages_per_keyword: 每个关键词的搜索页数 (默认2)
-                - comments_per_note: 每个笔记的评论数 (默认20)
+                - comments_per_post: 每个帖子的评论数 (默认20)
                 - max_notes: 最大笔记数 (默认20)
 
         Returns:
@@ -342,8 +342,8 @@ class ScraperAgent(BaseAgent):
         keywords = context.get("keywords", kwargs.get("keywords", []))
         business_idea = context.get("business_idea", kwargs.get("business_idea", ""))
         pages_per_keyword = kwargs.get("pages_per_keyword", 2)
-        comments_per_note = kwargs.get("comments_per_note", 20)
-        max_notes = kwargs.get("max_notes", 20)
+        comments_per_post = kwargs.get("comments_per_post", 20)
+        max_posts = kwargs.get("max_notes", 20)
 
         # DEBUG: Log keywords received from context
         logger.debug(f"[SCRAPER_AGENT] Keywords from context: {keywords}")
@@ -368,8 +368,8 @@ class ScraperAgent(BaseAgent):
             self,
             keywords=keywords,
             pages_per_keyword=pages_per_keyword,
-            comments_per_note=comments_per_note,
-            max_notes=max_notes,
+            comments_per_post=comments_per_post,
+            max_posts=max_posts,
             progress_callback=self._progress_callback
         )
 

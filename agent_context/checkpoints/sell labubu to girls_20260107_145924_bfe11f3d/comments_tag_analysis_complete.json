@@ -1,0 +1,808 @@
+{
+  "tag_analysis": {
+    "success": true,
+    "tag_analysis": {
+      "crowd_scenario": {},
+      "functional_value": {
+        "性能表现-核心指标": [
+          "-产品真实性",
+          "产品真实性",
+          "产品质量"
+        ],
+        "技术特性-技术优势": [
+          "-品牌价值",
+          "设计独特性",
+          "品牌价值"
+        ],
+        "产品功能-核心能力": [
+          "收藏价值",
+          "玩具功能"
+        ]
+      },
+      "assurance_value": {
+        "生态支持-社区商业": [
+          "社区支持",
+          "市场流通"
+        ],
+        "可靠性-质量保证": [
+          "-产品质量保证",
+          "品牌信任"
+        ],
+        "服务支持-客户服务": [
+          "售后服务",
+          "购买保障"
+        ]
+      },
+      "experience_value": {
+        "社区氛围-讨论质量": [
+          "讨论氛围",
+          "社区互动",
+          "-讨论氛围"
+        ],
+        "推荐意愿-使用意向": [
+          "-购买意向",
+          "购买意向",
+          "推荐意愿",
+          "-推荐意愿"
+        ],
+        "用户体验-易用性": [
+          "产品外观",
+          "-产品外观"
+        ]
+      },
+      "total_posts_analyzed": 20,
+      "total_tags_applied": 85,
+      "analysis_summary": "基于 20 个帖子的评论生成的标签体系，共应用 85 个标签",
+      "tag_statistics": {
+        "生态支持-社区商业": {
+          "社区支持": 16,
+          "市场流通": 3
+        },
+        "社区氛围-讨论质量": {
+          "讨论氛围": 1,
+          "社区互动": 14,
+          "-讨论氛围": 5
+        },
+        "性能表现-核心指标": {
+          "-产品真实性": 1,
+          "产品真实性": 2,
+          "产品质量": 1
+        },
+        "技术特性-技术优势": {
+          "-品牌价值": 1,
+          "设计独特性": 2,
+          "品牌价值": 7
+        },
+        "可靠性-质量保证": {
+          "-产品质量保证": 1,
+          "品牌信任": 3
+        },
+        "推荐意愿-使用意向": {
+          "-购买意向": 3,
+          "购买意向": 4,
+          "推荐意愿": 2,
+          "-推荐意愿": 3
+        },
+        "产品功能-核心能力": {
+          "收藏价值": 2,
+          "玩具功能": 2
+        },
+        "服务支持-客户服务": {
+          "售后服务": 2,
+          "购买保障": 7
+        },
+        "用户体验-易用性": {
+          "产品外观": 2,
+          "-产品外观": 1
+        }
+      },
+      "persona_analysis": {
+        "personas": [
+          {
+            "gender": "女性",
+            "age_estimate": "30-40岁",
+            "demand_keywords": [
+              "家庭和谐",
+              "儿童安全",
+              "道德责任",
+              "家庭关系"
+            ],
+            "purchase_motivation": [
+              "保护孩子",
+              "家庭和睦",
+              "维护亲子关系",
+              "道德立场"
+            ],
+            "emotional_tone": "消极",
+            "persona_tags": [
+              "家庭保护者",
+              "道德重视",
+              "亲子关系敏感",
+              "情感投入",
+              "家庭价值观强"
+            ]
+          },
+          {
+            "gender": "女性",
+            "age_estimate": "35-45岁",
+            "demand_keywords": [
+              "尊重",
+              "家庭支持",
+              "情感交流",
+              "伦理道德"
+            ],
+            "purchase_motivation": [
+              "维护家庭尊严",
+              "情感纽带",
+              "反对不当行为",
+              "支持孩子"
+            ],
+            "emotional_tone": "消极",
+            "persona_tags": [
+              "家庭守护者",
+              "情感丰富",
+              "重视尊严",
+              "道德意识强",
+              "反对不公"
+            ]
+          },
+          {
+            "gender": "男性",
+            "age_estimate": "20-30岁",
+            "demand_keywords": [
+              "正义感",
+              "家庭价值",
+              "社会道德",
+              "儿童权益"
+            ],
+            "purchase_motivation": [
+              "捍卫正义",
+              "保护家人",
+              "社会责任感",
+              "反对不道德行为"
+            ],
+            "emotional_tone": "消极",
+            "persona_tags": [
+              "正义捍卫者",
+              "家庭导向",
+              "道德重视",
+              "情感激烈",
+              "社会责任感强"
+            ]
+          }
+        ],
+        "total_personas": 3,
+        "analysis_summary": "基于评论内容生成的典型用户画像分析"
+      }
+    },
+    "analyzed_results": [
+      {
+        "note_id": "1q1r7g4",
+        "title": "AITA for not making my daughter switch back a gifted Labubu with her younger cousin after her uncle found out the one my daughter gained in the swap is rare with a high resale value?",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "讨论氛围"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1lkdoae",
+        "title": "This girl locally is trying to SWEAR up and down this is a real Labubu to sell me…. Thoughts?",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "性能表现-核心指标": [
+              "-产品真实性"
+            ],
+            "技术特性-技术优势": [
+              "-品牌价值"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [
+              "-产品质量保证"
+            ],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ],
+            "推荐意愿-使用意向": [
+              "-购买意向"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1lnql9u",
+        "title": "Accidentally gave a 5 year old my real Happiness today 😀",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [],
+            "性能表现-核心指标": [],
+            "技术特性-技术优势": []
+          },
+          "保障价值": {
+            "可靠性-质量保证": [],
+            "服务支持-客户服务": [],
+            "生态支持-社区商业": []
+          },
+          "体验价值": {
+            "用户体验-易用性": [],
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ],
+            "推荐意愿-使用意向": []
+          }
+        }
+      },
+      {
+        "note_id": "1k8ep8y",
+        "title": "Someone was RETURNING THIS?! bought it off them at popmart",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "性能表现-核心指标": [
+              "产品真实性"
+            ],
+            "技术特性-技术优势": [
+              "设计独特性"
+            ]
+          },
+          "保障价值": {
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ],
+            "推荐意愿-使用意向": [
+              "购买意向"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1mslozj",
+        "title": "People are so mean",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [
+              "收藏价值",
+              "玩具功能"
+            ],
+            "性能表现-核心指标": [],
+            "技术特性-技术优势": [
+              "设计独特性"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [],
+            "服务支持-客户服务": [],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "用户体验-易用性": [
+              "产品外观"
+            ],
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ],
+            "推荐意愿-使用意向": []
+          }
+        }
+      },
+      {
+        "note_id": "1oxinrf",
+        "title": "[US-CA] [H] 🛍️ Labubu, Crybaby, SP, Molly, Pucky, Hacipupu, Hirono, Dimoo, pop beans + more ✨ [W] Payment 💸 Fast shipping!",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {
+            "服务支持-客户服务": [
+              "售后服务",
+              "购买保障"
+            ],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1o6eegu",
+        "title": "Charli xcx Enters Her Next Chapter (Full Vanity Fair Interview)",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "技术特性-技术优势": [
+              "品牌价值"
+            ]
+          },
+          "保障价值": {
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "社区互动",
+              "-讨论氛围"
+            ],
+            "推荐意愿-使用意向": [
+              "推荐意愿"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1pjmfd9",
+        "title": "[US-CA] [H] PFL, MAC, HAS, BIE, Coke, Mokoko, $11 Figurines, Crybaby, and more [W] Payment (🎉 Super Reduced Price 🎉 Below Retail 🎉)",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {
+            "服务支持-客户服务": [
+              "购买保障"
+            ],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {}
+        }
+      },
+      {
+        "note_id": "1oxjqit",
+        "title": "Whatnot Dolls Kill, what happened?",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "性能表现-核心指标": [
+              "产品质量"
+            ],
+            "技术特性-技术优势": [
+              "品牌价值"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [
+              "品牌信任"
+            ],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "用户体验-易用性": [
+              "产品外观"
+            ],
+            "社区氛围-讨论质量": [
+              "社区互动",
+              "-讨论氛围"
+            ],
+            "推荐意愿-使用意向": [
+              "-推荐意愿",
+              "-购买意向"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1mmdmn1",
+        "title": "[US-HI] [H] SUMMER CLEAR-OUT SALE: BIE Pendants  + Phone Charms, FIW Doll, WM Pinch Pendants, Labubu Plush Bag, WM Messenger Bag, WBC, The Monsters Cheers, Baby Molly [W] Payment",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [],
+            "性能表现-核心指标": [],
+            "技术特性-技术优势": []
+          },
+          "保障价值": {
+            "可靠性-质量保证": [],
+            "服务支持-客户服务": [],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "用户体验-易用性": [],
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ],
+            "推荐意愿-使用意向": [
+              "购买意向"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1orsqlf",
+        "title": "[US-CA] [H] 🛍️ Labubu, Crybaby, SP, Molly, Pucky, Hacipupu, Hirono, Dimoo, pop beans + more ✨ [W] Payment 💸 Fast shipping!",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {
+            "服务支持-客户服务": [
+              "购买保障"
+            ],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1pve69d",
+        "title": "[US-CA] [H] 🎄 SALE ‼️ Labubu, Crybaby, SP, Molly, Dimoo, Pucky, Hacipupu, pop beans + more ✨ [W] Payment",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "性能表现-核心指标": [],
+            "技术特性-技术优势": [
+              "品牌价值"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [
+              "品牌信任"
+            ],
+            "服务支持-客户服务": [
+              "购买保障"
+            ],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1nbcixu",
+        "title": "[US- CO] [H] CHEAPER good luck to you, Mac, BIE, Mickey, head in clouds, hidden Labubu, zootopia, gummy, stitch, etc [W] payment",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [],
+            "性能表现-核心指标": [],
+            "技术特性-技术优势": [
+              "品牌价值"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [],
+            "服务支持-客户服务": [
+              "购买保障"
+            ],
+            "生态支持-社区商业": [
+              "社区支持",
+              "市场流通"
+            ]
+          },
+          "体验价值": {
+            "用户体验-易用性": [],
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ],
+            "推荐意愿-使用意向": [
+              "购买意向"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1lnzys6",
+        "title": "KATSEYE is KPOP, there's nothing not-kpop about them",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [],
+            "性能表现-核心指标": [],
+            "技术特性-技术优势": []
+          },
+          "保障价值": {
+            "可靠性-质量保证": [],
+            "服务支持-客户服务": [],
+            "生态支持-社区商业": []
+          },
+          "体验价值": {
+            "用户体验-易用性": [],
+            "社区氛围-讨论质量": [
+              "-讨论氛围"
+            ],
+            "推荐意愿-使用意向": [
+              "-推荐意愿"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1mjznxn",
+        "title": "WTF is Kpop-Demon Hunters about?",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [],
+            "性能表现-核心指标": [],
+            "技术特性-技术优势": [
+              "品牌价值"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [],
+            "服务支持-客户服务": [],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "用户体验-易用性": [
+              "-产品外观"
+            ],
+            "社区氛围-讨论质量": [
+              "-讨论氛围"
+            ],
+            "推荐意愿-使用意向": [
+              "-推荐意愿"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1onmkp1",
+        "title": "Half the women saying they ‘don’t like men’ are just scared of losing approval from other women.",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {},
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "-讨论氛围"
+            ],
+            "推荐意愿-使用意向": [
+              "-购买意向"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1n7z39g",
+        "title": "[US-ID] [H] Labubu, Hirono Fight for Joy, Mickey, Power Puff Cry Baby, Stitch, Gummy Bears, Pucky Roly Poly, etc. (below/close to retail) [W] Payment or Trade (see list)",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {
+            "可靠性-质量保证": [
+              "品牌信任"
+            ],
+            "服务支持-客户服务": [
+              "售后服务",
+              "购买保障"
+            ],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "用户体验-易用性": [],
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ],
+            "推荐意愿-使用意向": [
+              "推荐意愿",
+              "购买意向"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1nyq7hr",
+        "title": "SELLING LOVE - Need Wedding Funds",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "性能表现-核心指标": [
+              "产品真实性"
+            ],
+            "技术特性-技术优势": [
+              "品牌价值"
+            ]
+          },
+          "保障价值": {
+            "生态支持-社区商业": [
+              "社区支持",
+              "市场流通"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1n568jv",
+        "title": "[US-CO] [H] LOW PRICES mac, BIE, has, FIW, shrimp, bbb, powerpuff, summer ride, mickey, Winnie, fun crash, wacky mart, gummy bear [W] Payment",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {},
+          "保障价值": {
+            "服务支持-客户服务": [
+              "购买保障"
+            ],
+            "生态支持-社区商业": [
+              "社区支持"
+            ]
+          },
+          "体验价值": {
+            "社区氛围-讨论质量": [
+              "社区互动"
+            ]
+          }
+        }
+      },
+      {
+        "note_id": "1q1jfku",
+        "title": "[US-CA] UFS",
+        "comments_count": 20,
+        "tags": {
+          "人群场景": {},
+          "功能价值": {
+            "产品功能-核心能力": [
+              "收藏价值",
+              "玩具功能"
+            ],
+            "性能表现-核心指标": [],
+            "技术特性-技术优势": [
+              "品牌价值"
+            ]
+          },
+          "保障价值": {
+            "可靠性-质量保证": [],
+            "服务支持-客户服务": [],
+            "生态支持-社区商业": [
+              "市场流通"
+            ]
+          },
+          "体验价值": {
+            "用户体验-易用性": [],
+            "社区氛围-讨论质量": [],
+            "推荐意愿-使用意向": []
+          }
+        }
+      }
+    ],
+    "total_posts_analyzed": 20,
+    "total_comments": 400,
+    "persona_analysis": {
+      "personas": [
+        {
+          "gender": "女性",
+          "age_estimate": "30-40岁",
+          "demand_keywords": [
+            "家庭和谐",
+            "儿童安全",
+            "道德责任",
+            "家庭关系"
+          ],
+          "purchase_motivation": [
+            "保护孩子",
+            "家庭和睦",
+            "维护亲子关系",
+            "道德立场"
+          ],
+          "emotional_tone": "消极",
+          "persona_tags": [
+            "家庭保护者",
+            "道德重视",
+            "亲子关系敏感",
+            "情感投入",
+            "家庭价值观强"
+          ]
+        },
+        {
+          "gender": "女性",
+          "age_estimate": "35-45岁",
+          "demand_keywords": [
+            "尊重",
+            "家庭支持",
+            "情感交流",
+            "伦理道德"
+          ],
+          "purchase_motivation": [
+            "维护家庭尊严",
+            "情感纽带",
+            "反对不当行为",
+            "支持孩子"
+          ],
+          "emotional_tone": "消极",
+          "persona_tags": [
+            "家庭守护者",
+            "情感丰富",
+            "重视尊严",
+            "道德意识强",
+            "反对不公"
+          ]
+        },
+        {
+          "gender": "男性",
+          "age_estimate": "20-30岁",
+          "demand_keywords": [
+            "正义感",
+            "家庭价值",
+            "社会道德",
+            "儿童权益"
+          ],
+          "purchase_motivation": [
+            "捍卫正义",
+            "保护家人",
+            "社会责任感",
+            "反对不道德行为"
+          ],
+          "emotional_tone": "消极",
+          "persona_tags": [
+            "正义捍卫者",
+            "家庭导向",
+            "道德重视",
+            "情感激烈",
+            "社会责任感强"
+          ]
+        }
+      ],
+      "total_personas": 3,
+      "analysis_summary": "基于评论内容生成的典型用户画像分析"
+    }
+  }
+}

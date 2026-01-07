@@ -149,7 +149,7 @@ class OrchestratorAgent(BaseAgent):
                 - business_idea: 业务创意
                 - keyword_count: 关键词数量 (默认3)
                 - pages_per_keyword: 每个关键词的搜索页数 (默认2)
-                - comments_per_note: 每个笔记的评论数 (默认20)
+                - comments_per_post: 每个帖子的评论数 (默认20)
                 - report_format: 报告格式 (text/html，默认html)
                 - use_user_input_as_keyword: 是否直接使用用户输入作为关键词
 
@@ -251,7 +251,7 @@ class OrchestratorAgent(BaseAgent):
         """
         keyword_count = kwargs.get("keyword_count", 3)
         pages_per_keyword = kwargs.get("pages_per_keyword", 2)
-        comments_per_note = kwargs.get("comments_per_note", 20)
+        comments_per_post = kwargs.get("comments_per_post", 20)
         use_fast_mode = kwargs.get("use_user_input_as_keyword", False)
 
         # 从配置获取最大分析帖子数
@@ -266,7 +266,7 @@ class OrchestratorAgent(BaseAgent):
         # Fast mode: 减少数据量
         if use_fast_mode:
             pages_per_keyword = 1
-            comments_per_note = 5
+            comments_per_post = 5
             logger.info(f"[快速模式] 减少数据量: pages=1, comments=5")
 
         steps = [
@@ -274,10 +274,10 @@ class OrchestratorAgent(BaseAgent):
                 step_id="scrape_data",
                 agent_name="scraper_agent",
                 task="batch_scrape_with_comments",
-                description="抓取小红书数据（带评论合并）",
+                description="抓取Reddit数据（带评论合并）",
                 params={
                     "pages_per_keyword": pages_per_keyword,
-                    "comments_per_note": comments_per_note,
+                    "comments_per_post": comments_per_post,
                     "max_notes": max_notes
                 },
                 depends_on=[],  # 无依赖，直接开始

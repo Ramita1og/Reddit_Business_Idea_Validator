@@ -177,7 +177,7 @@ async def batch_get_comments_skill(
 
         if result.get("success"):
             results_dict = result.get("results", {})
-            total_comments = result.get("total_comments", 0)
+            total_comments = sum(len(comments) for comments in results_dict.values())
             logger.info(f"Batch complete: {total_comments} comments total")
 
             return {
@@ -313,8 +313,8 @@ async def batch_scrape_skill(
 
             # 保存关键词结果
             total_comments_for_keyword = sum(
-                len(comments) for comments in all_comments.values()
-                if any(p.get("post_id") == post_id for p in keyword_posts for post_id in [p.get("post_id")])
+                len(all_comments.get(p.get("post_id"), []))
+                for p in keyword_posts
             )
 
             keyword_results[keyword] = {
@@ -409,8 +409,16 @@ async def batch_scrape_with_comments_skill(
     all_posts = scrape_result.get("posts", [])
     all_comments = scrape_result.get("comments", {})
 
+    # 将 Reddit 数据转换为统一格式
+    unified_posts = [convert_reddit_post_to_unified(post) for post in all_posts]
+    
+    # 将 Reddit 评论转换为统一格式
+    unified_comments = {}
+    for post_id, comments in all_comments.items():
+        unified_comments[post_id] = [convert_reddit_comment_to_unified(comment) for comment in comments]
+
     # 合并 comments 到 posts
-    posts_with_comments = _merge_comments_to_posts(all_posts, all_comments)
+    posts_with_comments = _merge_comments_to_posts(unified_posts, unified_comments)
 
     # 计算元数据
     metadata = {
@@ -457,7 +465,7 @@ def _merge_comments_to_posts(
     posts_with_comments = []
 
     for post in posts:
-        post_id = post.get("post_id")
+        post_id = post.get("note_id")
         post_copy = post.copy()
 
         # Add comments to post
@@ -469,3 +477,73 @@ def _merge_comments_to_posts(
         posts_with_comments.append(post_copy)
 
     return posts_with_comments
+
+
+def convert_reddit_post_to_unified(reddit_post: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    将 Reddit 帖子数据转换为统一格式（PostWithComments）
+
+    Args:
+        reddit_post: Reddit 帖子数据（来自 RedditPostModel）
+
+    Returns:
+        统一格式的帖子数据
+    """
+    unified_post = {
+        "note_id": reddit_post.get("post_id"),
+        "title": reddit_post.get("title", ""),
+        "desc": reddit_post.get("content", ""),
+        "type": "text",
+        "publish_time": reddit_post.get("created_utc", 0),
+        "liked_count": reddit_post.get("score", 0),
+        "collected_count": 0,
+        "shared_count": 0,
+        "comments_count": reddit_post.get("num_comments", 0),
+        "user_id": reddit_post.get("author", ""),
+        "user_nickname": reddit_post.get("author", ""),
+        "user_avatar": None,
+        "cover_url": None,
+        "images": [],
+        "keyword_matched": reddit_post.get("keyword_matched"),
+        
+        "url": reddit_post.get("url"),
+        "score": reddit_post.get("score"),
+        "upvote_ratio": reddit_post.get("upvote_ratio"),
+        "subreddit": reddit_post.get("subreddit"),
+        "author": reddit_post.get("author"),
+        
+        "comments_data": [],
+        "comments_fetched": False,
+        "comments_fetch_error": None
+    }
+    
+    return unified_post
+
+
+def convert_reddit_comment_to_unified(reddit_comment: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    将 Reddit 评论数据转换为统一格式
+
+    Args:
+        reddit_comment: Reddit 评论数据（来自 RedditCommentModel）
+
+    Returns:
+        统一格式的评论数据
+    """
+    unified_comment = {
+        "comment_id": reddit_comment.get("comment_id"),
+        "note_id": reddit_comment.get("post_id"),
+        "content": reddit_comment.get("body", ""),
+        "publish_time": reddit_comment.get("created_utc", 0),
+        "ip_location": None,
+        "like_count": reddit_comment.get("score", 0),
+        "user_id": reddit_comment.get("author", ""),
+        "user_nickname": reddit_comment.get("author", ""),
+        "parent_comment_id": reddit_comment.get("parent_id"),
+        
+        "score": reddit_comment.get("score"),
+        "author": reddit_comment.get("author"),
+        "depth": reddit_comment.get("depth", 0)
+    }
+    
+    return unified_comment

@@ -1,12 +1,14 @@
-# Business Idea Validation Agent System
+# Reddit_Business_Idea_Validator - Qwen Code Context
 
 ## Project Overview
 
-This is an advanced multi-agent system designed for business idea validation. The system leverages AI and web scraping to analyze market demand, user pain points, and competitive landscape by collecting and analyzing data from social media platforms, particularly Xiaohongshu (Little Red Book/Red).
+This is a multi-agent system for business idea validation that collects and analyzes data from social media platforms, primarily Reddit, to analyze market demand, user pain points, and competitive landscape. The system uses AI and web scraping to provide comprehensive market validation reports.
+
+**Note**: The project contains both Reddit and Xiaohongshu (XHS/Red) integration code, but the README and primary focus is on Reddit. The system is designed to be platform-agnostic with a modular architecture.
 
 ### Architecture
 
-The system follows a modular architecture with the following key components:
+The system follows a modular multi-agent architecture with the following key components:
 
 1. **Agents**: Core intelligence units that perform specific tasks
 2. **MCP Servers**: Microservice-based servers for different capabilities
@@ -30,10 +32,11 @@ The system follows a modular architecture with the following key components:
 
 #### 3. Configuration Manager (`agents/config.py`)
 - Handles configuration loading from YAML, JSON, and environment variables
-- Supports different configuration types (XHS, LLM, Storage, Orchestrator)
+- Supports different configuration types (Reddit, LLM, Storage, Orchestrator)
 - Provides default values and environment variable overrides
 
 #### 4. MCP Servers (`mcp_servers/`)
+- **Reddit Server**: Interfaces with Reddit API using PRAW for data
 - **XHS Server**: Interfaces with TikHub API for Xiaohongshu data
 - **LLM Server**: Provides LLM capabilities for analysis and generation
 - **Storage Server**: Manages checkpoint persistence and data storage
@@ -41,13 +44,13 @@ The system follows a modular architecture with the following key components:
 #### 5. Models (`models/`)
 - **Agent Models**: Task results, progress updates, execution plans
 - **Context Models**: Run contexts, agent states
-- **Business Models**: Xiaohongshu notes, comments, analysis results
+- **Business Models**: Reddit posts, comments, analysis results
 
 ## Building and Running
 
 ### Prerequisites
 - Python 3.9+
-- TikHub API token for Xiaohongshu data access
+- Reddit API credentials (client ID, client secret, user agent)
 - LLM API key (OpenAI, etc.)
 
 ### Setup
@@ -63,7 +66,9 @@ The system follows a modular architecture with the following key components:
    ```
    
 3. Edit the `.env` file to add your API keys:
-   - `TIKHUB_TOKEN`: Your TikHub API token
+   - `REDDIT_CLIENT_ID`: Your Reddit app client ID
+   - `REDDIT_CLIENT_SECRET`: Your Reddit app client secret
+   - `REDDIT_USER_AGENT`: Your Reddit user agent string
    - `OPENAI_API_KEY`: Your OpenAI API key (or equivalent)
    - `OPENAI_BASE_URL`: API endpoint URL
 
@@ -84,13 +89,14 @@ For faster execution, you can use fast mode by responding 'y' when prompted.
 ### Running Tests
 Execute the integration tests to verify system functionality:
 ```bash
-python tests/test_e2e.py
+python test_reddit_connection.py
+python test_end_to_end.py
 ```
 
 ### Main Execution Flow
 The orchestrator agent manages the complete business validation workflow:
-1. **Keyword Generation**: Generate relevant search keywords
-2. **Data Scraping**: Collect Xiaohongshu posts and comments
+1. **Keyword Generation**: Generate relevant search keywords (or use user input directly)
+2. **Data Scraping**: Collect Reddit posts and comments
 3. **Data Analysis**: Analyze content for market signals and user pain points
 4. **Report Generation**: Create comprehensive validation report
 
@@ -142,7 +148,7 @@ The orchestrator agent manages the complete business validation workflow:
 - Resume from failure capabilities
 
 ### 5. Data Models
-- Rich data models for Xiaohongshu content
+- Rich data models for Reddit content
 - Comprehensive analysis results structure
 - Validation result aggregation
 
@@ -150,16 +156,12 @@ The orchestrator agent manages the complete business validation workflow:
 
 The system includes a comprehensive set of skills organized by functional areas:
 
-### Keyword Skills
-- `generate_keywords_skill`: Generate search keywords based on business idea
-- `refine_keywords_skill`: Optimize existing keywords based on feedback
-- `validate_keywords_skill`: Validate keyword quality and relevance
-
 ### Scraper Skills
-- `search_posts_skill`: Search Xiaohongshu posts by keyword
+- `search_posts_skill`: Search Reddit posts by keyword
 - `get_comments_skill`: Get comments for a specific post
 - `batch_get_comments_skill`: Get comments for multiple posts in batch
 - `batch_scrape_skill`: Perform batch scraping of posts and comments
+- `batch_scrape_with_comments_skill`: Batch scraping with comments merged to posts
 
 ### Analyzer Skills
 - `analyze_post_skill`: Analyze individual posts for relevance and insights
@@ -174,7 +176,7 @@ The system includes a comprehensive set of skills organized by functional areas:
 
 ## File Structure
 ```
-agent_system/
+reddit_business_agent/
 ├── models/                 # Data models
 │   ├── __init__.py
 │   ├── agent_models.py     # Agent-related models
@@ -188,18 +190,17 @@ agent_system/
 │   ├── orchestrator.py     # Main orchestrator agent
 │   ├── subagents/          # Specialized agents
 │   │   ├── __init__.py
-│   │   ├── keyword_agent.py    # Keyword generation agent
 │   │   ├── scraper_agent.py    # Data scraping agent
 │   │   ├── analyzer_agent.py   # Data analysis agent
 │   │   └── reporter_agent.py   # Report generation agent
 │   └── skills/             # Agent capabilities
 │       ├── __init__.py
-│       ├── keyword_skills.py
 │       ├── scraper_skills.py
 │       ├── analyzer_skills.py
 │       └── reporter_skills.py
 ├── mcp_servers/            # MCP server implementations
 │   ├── __init__.py
+│   ├── reddit_server.py    # Reddit server
 │   ├── xhs_server.py       # Xiaohongshu server
 │   ├── llm_server.py       # LLM server
 │   └── storage_server.py   # Storage server
@@ -212,14 +213,17 @@ agent_system/
 │   └── checkpoints/        # Checkpoint files
 ├── requirements.txt        # Dependencies
 ├── run_agent.py            # Main execution script
+├── test_reddit_connection.py # Reddit API connection test
+├── test_end_to_end.py      # End-to-end test
 ├── README.md               # Project documentation
-├── USER_GUIDE.md           # User guide
 ├── .env.example           # Environment variables example
 └── .env                   # Environment variables (not in repo)
 ```
 
 ## Environment Variables
-- `TIKHUB_TOKEN`: API token for TikHub Xiaohongshu service
+- `REDDIT_CLIENT_ID`: Reddit API client ID
+- `REDDIT_CLIENT_SECRET`: Reddit API client secret
+- `REDDIT_USER_AGENT`: Reddit user agent string
 - `OPENAI_API_KEY`: API key for LLM service
 - `OPENAI_BASE_URL`: Base URL for LLM API (default: OpenAI)
 - `SCRAPER_PAGES_PER_KEYWORD`: Number of pages to scrape per keyword (default: 2)
@@ -229,13 +233,16 @@ agent_system/
 
 ## API Integration
 The system integrates with:
-- TikHub API for Xiaohongshu data access
+- Reddit API via PRAW for Reddit data access
 - LLM APIs (OpenAI, etc.) for analysis and generation
+- TikHub API for Xiaohongshu data access (dual platform support)
 - File system or Redis for persistent storage
 
 ## Development Notes
-- The system is currently in Phase 1-3 (Complete Implementation) as per the development plan
 - The system is designed to be extensible for additional social media platforms
 - Error handling and retry mechanisms are built into the base agent class
 - Fast mode is available for quicker validation with reduced data collection
 - The system supports checkpointing to resume from failures
+- The system uses a unified data model (`PostWithComments`) that works with both Reddit and Xiaohongshu data
+- The orchestrator now skips keyword generation and directly uses user input as the search keyword
+- The system includes advanced comment analysis with tag system based on functions.txt

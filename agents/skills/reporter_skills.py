@@ -199,6 +199,11 @@ async def generate_html_report_skill(
     recent_posts_30days = metadata.get("recent_posts_30days", 0)
     total_posts = metadata.get("total_posts_analyzed", 0)
     top_posts = metadata.get("top_posts", [])
+    
+    # Reddit 特有指标
+    avg_score = metadata.get("avg_score", 0)
+    avg_upvote_ratio = metadata.get("avg_upvote_ratio", 0)
+    subreddit_distribution = metadata.get("subreddit_distribution", {})
 
     # 新增：提取标签分析数据
     tag_data = None
@@ -419,6 +424,22 @@ async def generate_html_report_skill(
             font-size: 13px;
             color: #555;
             border-left: 3px solid #ff2442;
+        }}
+        .top-post-meta {{
+            background: #f0f0f0;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #666;
+            border-left: 3px solid #ff2442;
+        }}
+        .top-post-meta a {{
+            text-decoration: none;
+            font-weight: 500;
+        }}
+        .top-post-meta a:hover {{
+            text-decoration: underline;
         }}
         .sentiment-badge {{
             display: inline-block;
@@ -641,6 +662,14 @@ async def generate_html_report_skill(
                 <div class="stat-value">{avg_engagement_score:.1f}</div>
             </div>
             <div class="stat-box">
+                <div class="stat-label">平均 Reddit 评分</div>
+                <div class="stat-value">{avg_score:.0f}</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">平均点赞比例</div>
+                <div class="stat-value">{avg_upvote_ratio * 100:.1f}%</div>
+            </div>
+            <div class="stat-box">
                 <div class="stat-label">分析评论数</div>
                 <div class="stat-value">{total_comments_analyzed}</div>
             </div>
@@ -653,6 +682,11 @@ async def generate_html_report_skill(
                 <div class="stat-value" style="color: {sentiment_color}">{sentiment_label}</div>
             </div>
         </div>
+        
+        {f'''<h2>子版块分布</h2>
+        <div class="summary">
+            {chr(10).join(f"<div>• r/{sub}: {count} 个帖子</div>" for sub, count in sorted(subreddit_distribution.items(), key=lambda x: x[1], reverse=True))}
+        </div>''' if subreddit_distribution else ''}
 
         <h2>情感分布</h2>
         <div class="summary">
@@ -694,6 +728,13 @@ async def generate_html_report_skill(
             sentiment = post.get('sentiment', 'neutral')
             analysis_summary = post.get('analysis_summary', '')
             comments = post.get('comments', [])
+            
+            # Reddit 特有字段
+            score = post.get('score', 0)
+            upvote_ratio = post.get('upvote_ratio', 0)
+            subreddit = post.get('subreddit', '')
+            post_url = post.get('url', '')
+            author = post.get('author', '')
 
             sentiment_class_map = {
                 'positive': 'sentiment-badge-positive',
@@ -723,13 +764,10 @@ async def generate_html_report_skill(
                         总互动: <span class="top-post-stat-value">{total_engagement:,}</span>
                     </div>
                     <div class="top-post-stat">
-                        赞: <span class="top-post-stat-value">{liked_count:,}</span>
+                        Reddit 评分: <span class="top-post-stat-value">{score:,}</span>
                     </div>
                     <div class="top-post-stat">
-                        收藏: <span class="top-post-stat-value">{collected_count:,}</span>
-                    </div>
-                    <div class="top-post-stat">
-                        分享: <span class="top-post-stat-value">{shared_count:,}</span>
+                        点赞比例: <span class="top-post-stat-value">{upvote_ratio * 100:.1f}%</span>
                     </div>
                     <div class="top-post-stat">
                         评论: <span class="top-post-stat-value">{comments_count:,}</span>
@@ -738,6 +776,12 @@ async def generate_html_report_skill(
                         AI评分: <span class="top-post-stat-value">{engagement_score}/10</span>
                     </div>
                 </div>
+                
+                {f'''<div class="top-post-meta">
+                    <strong>子版块:</strong> r/{subreddit} | 
+                    <strong>作者:</strong> {author} | 
+                    <a href="{post_url}" target="_blank" style="color: #ff2442;">查看原文</a>
+                </div>''' if subreddit else ''}
         """
 
             if content:

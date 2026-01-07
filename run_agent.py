@@ -20,7 +20,7 @@ from agents.orchestrator import OrchestratorAgent
 from agents.config import ConfigManager
 from agents.context_store import ContextStore
 from agents.logging_config import setup_logging
-from mcp_servers.xhs_server import create_xhs_mcp_server
+from mcp_servers.reddit_server import RedditMCPServer
 from mcp_servers.llm_server import create_llm_mcp_server
 from mcp_servers.storage_server import create_storage_mcp_server
 
@@ -41,7 +41,7 @@ async def validate_business_idea(
     business_idea: str,
     keyword_count: int = 3,
     pages_per_keyword: int = 2,
-    comments_per_note: int = 20,
+    comments_per_post: int = 20,
     report_format: str = "html",
     use_user_input_as_keyword: bool = False
 ):
@@ -52,7 +52,7 @@ async def validate_business_idea(
         business_idea: 业务创意描述
         keyword_count: 生成关键词数量
         pages_per_keyword: 每个关键词搜索页数
-        comments_per_note: 每个笔记获取评论数
+        comments_per_post: 每个帖子获取评论数
         report_format: 报告格式 (html/text)
         use_user_input_as_keyword: 是否直接使用用户输入作为关键词
     """
@@ -66,18 +66,23 @@ async def validate_business_idea(
     context_store = ContextStore()
 
     # 获取 API 配置
-    xhs_config = config.get_xhs_mcp_config()
+    reddit_config = config.get_reddit_mcp_config()
     llm_config = config.get_llm_config()
 
     print("🔧 初始化系统...")
 
     # 启动 MCP 服务器
-    xhs_server = await create_xhs_mcp_server(xhs_config.auth_token)
+    reddit_server = RedditMCPServer(
+        client_id=reddit_config.client_id,
+        client_secret=reddit_config.client_secret,
+        user_agent=reddit_config.user_agent
+    )
+    await reddit_server.start()
     llm_server = await create_llm_mcp_server(llm_config.api_key, llm_config.base_url)
     storage_server = await create_storage_mcp_server("agent_context/checkpoints")
 
     mcp_clients = {
-        "xhs": xhs_server,
+        "reddit": reddit_server,
         "llm": llm_server,
         "storage": storage_server
     }
@@ -107,7 +112,7 @@ async def validate_business_idea(
         business_idea=business_idea,
         keyword_count=keyword_count,
         pages_per_keyword=pages_per_keyword,
-        comments_per_note=comments_per_note,
+        comments_per_post=comments_per_post,
         report_format=report_format,
         use_user_input_as_keyword=use_user_input_as_keyword
     )
@@ -115,7 +120,7 @@ async def validate_business_idea(
     # 清理资源
     print("\n🧹 清理资源...")
     await orchestrator.stop()
-    await xhs_server.stop()
+    await reddit_server.stop()
     await llm_server.stop()
     await storage_server.stop()
 
@@ -210,13 +215,13 @@ def main():
     if fast_mode == 'y':
         keyword_count = 1  # 快速模式：直接使用用户输入作为关键词
         pages_per_keyword = 1
-        comments_per_note = 5
+        comments_per_post = 5
         use_user_input_as_keyword = True  # 直接使用用户输入
         print("\n使用快速模式: 直接使用您的输入作为关键词 × 1 页 × 5 评论")
     else:
         keyword_count = 3
         pages_per_keyword = 2
-        comments_per_note = 20
+        comments_per_post = 20
         use_user_input_as_keyword = False
         print("\n使用完整模式: 3 关键词 × 2 页 × 20 评论")
 
@@ -226,7 +231,7 @@ def main():
             business_idea=business_idea,
             keyword_count=keyword_count,
             pages_per_keyword=pages_per_keyword,
-            comments_per_note=comments_per_note,
+            comments_per_post=comments_per_post,
             use_user_input_as_keyword=use_user_input_as_keyword
         ))
 

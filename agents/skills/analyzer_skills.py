@@ -202,6 +202,15 @@ async def analyze_post_with_comments_skill(
 作者: {post_with_comments.get('user_nickname', '')}
 """
 
+    # 添加 Reddit 特有字段
+    if 'score' in post_with_comments:
+        post_text += f"""
+Reddit 评分: {post_with_comments.get('score', 0)}
+点赞比例: {post_with_comments.get('upvote_ratio', 0) * 100:.1f}%
+子版块: r/{post_with_comments.get('subreddit', 'unknown')}
+帖子链接: {post_with_comments.get('url', 'N/A')}
+"""
+
     # 提取评论内容
     comments = post_with_comments.get('comments_data', [])
     comments_text = ""
@@ -217,7 +226,7 @@ async def analyze_post_with_comments_skill(
 
     # 构建统一分析提示
     prompt = f"""
-你是一位资深市场分析师。请综合分析以下小红书帖子及其评论，判断其与业务创意的相关性：
+你是一位资深市场分析师。请综合分析以下 Reddit 帖子及其评论，判断其与业务创意的相关性：
 
 业务创意："{business_idea}"
 
@@ -248,7 +257,11 @@ async def analyze_post_with_comments_skill(
    - positive（正面）：整体氛围积极，用户表达出兴趣、认可或支持
    - negative（负面）：整体氛围消极，用户表达出不满、担忧或反对
    - neutral（中性）：整体内容客观，或积极与消极情绪相当
-9. 互动评分：1-10分，基于点赞/收藏/评论数量和质量
+9. 互动评分：1-10分，基于以下因素综合评估：
+   - Reddit 评分（score）：考虑帖子的净投票数
+   - 点赞比例（upvote_ratio）：考虑帖子获得正面评价的比例
+   - 评论数量和质量：考虑讨论的深度和参与度
+   - 子版块活跃度：考虑 r/{post_with_comments.get('subreddit', 'unknown')} 的社区特性
 
 请以 JSON 格式返回：
 {{
@@ -286,6 +299,13 @@ async def analyze_post_with_comments_skill(
                 analysis = result
 
             logger.info(f"Analysis complete for {note_id}: relevant={analysis.get('relevant')}, sentiment={analysis.get('sentiment')}")
+
+            # 添加 Reddit 特有字段到分析结果
+            analysis["score"] = post_with_comments.get("score", 0)
+            analysis["upvote_ratio"] = post_with_comments.get("upvote_ratio", 0)
+            analysis["subreddit"] = post_with_comments.get("subreddit", "")
+            analysis["comments_count"] = len(comments)
+            analysis["publish_time"] = post_with_comments.get("created_utc", 0)
 
             return {
                 "success": True,
@@ -712,6 +732,15 @@ async def batch_analyze_posts_with_comments_skill(
     relevant_count = len(relevant_posts)
     sentiment_counts = {"positive": 0, "negative": 0, "neutral": 0}
     avg_engagement = 0
+    
+    # Reddit 特有指标
+    total_score = 0
+    total_upvote_ratio = 0
+    subreddit_counts = {}
+    total_comments_analyzed = 0
+    from datetime import datetime, timezone
+    thirty_days_ago = datetime.now(timezone.utc).timestamp() - (30 * 24 * 60 * 60)
+    recent_posts_count = 0
 
     for a in all_analyses:
         analysis = a.get("analysis", {})
@@ -719,9 +748,35 @@ async def batch_analyze_posts_with_comments_skill(
         if sentiment in sentiment_counts:
             sentiment_counts[sentiment] += 1
         avg_engagement += analysis.get("engagement_score", 0)
+        
+        # Reddit 特有指标
+        total_score += analysis.get("score", 0)
+        total_upvote_ratio += analysis.get("upvote_ratio", 0)
+        
+        # 统计子版块分布
+        subreddit = analysis.get("subreddit", "unknown")
+        subreddit_counts[subreddit] = subreddit_counts.get(subreddit, 0) + 1
+        
+        # 统计评论数
+        total_comments_analyzed += analysis.get("comments_count", 0)
+        
+        # 统计最近30天的帖子
+        publish_time = analysis.get("publish_time", 0)
+        if publish_time >= thirty_days_ago:
+            recent_posts_count += 1
 
     if all_analyses:
         avg_engagement = avg_engagement / len(all_analyses)
+        avg_score = total_score / len(all_analyses)
+        avg_upvote_ratio = total_upvote_ratio / len(all_analyses)
+    else:
+        avg_score = 0
+        avg_upvote_ratio = 0
+
+    # 计算情感倾向分数（用于报告显示）
+    sentiment_score = (
+        sentiment_counts["positive"] - sentiment_counts["negative"]
+    ) / len(all_analyses) if all_analyses else 0
 
     summary = {
         "total_posts": total,
@@ -731,7 +786,13 @@ async def batch_analyze_posts_with_comments_skill(
         "relevant_count": relevant_count,
         "relevance_rate": relevant_count / successful_count if successful_count > 0 else 0,
         "sentiment_distribution": sentiment_counts,
-        "avg_engagement_score": avg_engagement
+        "avg_engagement_score": avg_engagement,
+        "avg_sentiment": sentiment_score,
+        "total_comments_analyzed": total_comments_analyzed,
+        "recent_posts_30days": recent_posts_count,
+        "avg_score": avg_score,
+        "avg_upvote_ratio": avg_upvote_ratio,
+        "subreddit_distribution": subreddit_counts
     }
 
     logger.info(
@@ -818,25 +879,25 @@ async def analyze_comments_with_tags_skill(
 
     # 第二步：生成标签体系
     logger.info("Step 1: Generating tag system from comments...")
-    tag_generation_prompt = f"""# 构建用户评论分析标签体系
+    tag_generation_prompt = f"""# 构建 Reddit 商业和技术讨论标签体系
 
 ## 您的任务：
-您是一位经验丰富的产品分析专家和自然语言处理专家。您的任务是基于我提供的一批用户评论文本，为该产品构建一个结构化的、多层级的分析标签体系。这个标签体系将用于后续对每条评论进行细致的分类和打标，以便深入洞察用户需求和反馈。
+您是一位资深的 Reddit 社区分析专家。您的任务是基于我提供的 Reddit 讨论评论，为商业和技术话题构建一个结构化的、多层级的分析标签体系。这个标签体系将用于后续对每条评论进行细致的分类和打标，以便深入洞察 Reddit 社区对各种产品、服务、技术、商业模式的观点和需求。
 
 ## 核心理论知识（请先学习并理解）
 
-1.  用户价值层级模型： 我们将从用户的角度出发，将他们对产品的关注点和评价归纳到以下四个核心价值层级。您的标签设计需要围绕这些层级展开：
-    *   人群与场景 (Crowd & Scenario): 描述的是"谁"在"什么情况下"使用或提及产品。这包括用户的身份特征、所处环境、使用产品的具体情境或期望达成的目标。
-    *   功能价值 (FunctionalValue): 指产品为了解决用户的核心问题所提供的具体功能、性能表现以及操作特性。
-    *   保障价值 (AssuranceValue): 涉及产品的质量、耐用性、安全性、可靠性，以及品牌提供的售前、售中、售后服务和支持。
-    *   体验价值 (ExperienceValue): 涵盖用户在与产品交互的整个生命周期中的主观感受，包括感官体验（外观、声音、气味等）、操作便捷性、情感连接等。
+1.  用户价值层级模型： 我们将从 Reddit 用户的角度出发，将他们对产品、服务、技术、商业模式的关注点和评价归纳到以下四个核心价值层级。您的标签设计需要围绕这些层级展开：
+    *   人群与场景 (Crowd & Scenario): 描述的是"谁"在"什么情况下"讨论产品/服务/技术。这包括用户的身份特征、行业背景、使用场景、讨论的具体情境或期望达成的目标。
+    *   功能价值 (FunctionalValue): 指产品/服务/技术为了解决用户的核心问题所提供的具体功能、性能表现以及技术特性。
+    *   保障价值 (AssuranceValue): 涉及产品/服务的可靠性、安全性、隐私保护，以及客户服务、售后支持、开源生态、社区支持等方面。
+    *   体验价值 (ExperienceValue): 涵盖用户在与产品/服务/技术交互的整个过程中的主观感受，包括易用性、社区氛围、学习资源、推荐意愿等。
 
 2.  标签设计原则：
     *   层级性： 标签体系应具有清晰的层级结构（一级标签、二级标签、三级标签）。
     *   覆盖性： 能够尽可能全面地覆盖评论中用户提及的主要议题。
     *   互斥性（理想状态）： 同一级下的标签应尽可能互斥，避免语义重叠过多。
-    *   简洁性： 每个标签的名称应简洁明了，尽量不超过5个汉字。
-    *   客观性： 标签本身不应包含情感倾向（如"效果好"、"质量差"），仅客观描述讨论的主题（如"清洁效果"、"产品材质"）。情感分析将在后续打标步骤中独立进行。
+    *   简洁性： 每个标签的名称应简洁明了，尽量不超过 8 个字符。
+    *   客观性： 标签本身不应包含情感倾向（如"效果好"、"质量差"），仅客观描述讨论的主题（如"功能完整性"、"性能表现"）。情感分析将在后续打标步骤中独立进行。
     *   可扩展性： 体系应具备一定的灵活性，方便未来根据新的评论内容进行补充和调整。
 
 标签体系层级结构定义：
@@ -848,28 +909,30 @@ async def analyze_comments_with_tags_skill(
     4.`体验价值`
 
 *   二级标签 (Level2Tag): 是对一级标签的进一步细分，代表了该价值层级下的主要关注领域。
-    *   示例（可根据业务创意调整）：
+    *   示例（可根据商业和技术讨论调整）：
         *   一级标签：`人群与场景`
-            *   二级标签：`用户需求与痛点-痛点问题` (分析挖掘出用户在相关过程中遇到的问题、困扰等，急需待解决的问题。)
-            *   二级标签：`用户需求与痛点-购买动机` (分析挖掘出用户购买动机：社交媒体影响，儿童兴趣，礼物需求，价格因素等等 。)
-            *   二级标签：`用户需求与痛点-使用场景` (用户是怎样用产品的，把产品用在什么场景。)
+            *   二级标签：`用户群体-身份特征` (分析讨论者的身份：开发者、企业用户、消费者、投资者、研究人员等)
+            *   二级标签：`使用场景-应用领域` (分析产品/服务的应用场景：日常使用、商业应用、技术开发、投资决策等)
+            *   二级标签：`讨论主题-话题类型` (分析讨论的具体主题：产品对比、市场分析、技术评估、商业模式等)
         *   一级标签：`功能价值`
-            *   二级标签：`产品反馈-产品优点` (从数据中挖掘出对用户来说目前对产品比较满意和认可的点，也就是用户认为产品有哪些优点)
-            *   二级标签：`产品反馈-产品缺点` (从数据中挖掘出对用户来说目前产品不满意的点，也就是用户认为产品有哪些缺点)
-            *   二级标签：`产品反馈-用户期望建议` (从数据中收集用户对产品有哪些期望和建议。比如用户希望增加某些功能等等。)
+            *   二级标签：`产品功能-核心能力` (分析产品/服务的核心功能、功能完整性、创新性等)
+            *   二级标签：`性能表现-核心指标` (分析产品/服务的性能指标：速度、效率、质量、可靠性等)
+            *   二级标签：`技术特性-技术优势` (分析技术架构、技术优势、技术壁垒等)
         *   一级标签：`保障价值`
-            *   二级标签：`服务评价-物流配送` (用户对产品的配送速度、包装完整性等方面的评价。)
-            *   二级标签：`服务评价-售后服务` (用户对企业在产品售后提供的维修、退换货、咨询等服务的满意度。)
+            *   二级标签：`可靠性-质量保证` (分析产品/服务的稳定性、质量保证、可靠性等)
+            *   二级标签：`服务支持-客户服务` (分析客户服务、售后支持、技术支持等)
+            *   二级标签：`生态支持-社区商业` (分析开源生态、社区支持、商业许可、合作伙伴等)
         *   一级标签：`体验价值`
-            *   二级标签：`品牌形象与口碑-推荐意愿` (对当前产品或服务，分析用户推荐给其他人的意愿程度。)
-            *   二级标签：`价格感知` (用户对产品价格的感受和评价。)
+            *   二级标签：`用户体验-易用性` (分析产品/服务的易用性、界面设计、交互体验等)
+            *   二级标签：`社区氛围-讨论质量` (分析讨论质量、社区活跃度、用户友好度、学习资源等)
+            *   二级标签：`推荐意愿-使用意向` (分析用户推荐给他人、持续使用、购买意愿、投资意向等)
 
 *   三级标签 (Level3Tag): 是对二级标签的具体化，代表了用户评论中实际讨论到的、更细致的主题点。这是您需要根据提供的评论文本重点设计的部分。
 
 您的具体操作指令：
 
-1.  仔细阅读并分析我提供的一批用户评论文本。
-2.  基于上述理论知识、层级结构定义和设计原则，为这批评论所讨论的产品生成一个三级标签体系。
+1.  仔细阅读并分析我提供的一批 Reddit 用户评论（关于商业和技术的讨论）。
+2.  基于上述理论知识、层级结构定义和设计原则，为这批评论所讨论的商业和技术话题生成一个三级标签体系。
 3.  一级标签和二级标签的类别和名称，您可以参考我给出的示例进行扩展或调整，使其更贴合实际评论内容，但一级标签必须是固定的四个维度。
 4.  三级标签是您创造性的核心，需要您从评论中提炼用户实际讨论的具体议题点，并用简洁的词语命名。
 5.  确保每个三级标签都归属于一个明确的二级标签和一级标签。
@@ -878,7 +941,7 @@ async def analyze_comments_with_tags_skill(
 ## 业务创意背景：
 {business_idea}
 
-## 用户评论文本:
+## Reddit 用户评论文本:
 {comments_text}
 
 请直接返回 JSON 格式的标签体系，不要包含任何其他文本。
@@ -886,35 +949,44 @@ async def analyze_comments_with_tags_skill(
 ```json
 {{
   "人群场景":{{
-    "用户需求与痛点-痛点问题":[
-      "安装便捷",
-      "使用困难"
+    "用户群体-身份特征":[
+      "开发者",
+      "企业用户",
+      "消费者"
     ],
-    "用户需求与痛点-使用场景":[
-      "家庭使用",
-      "办公室使用"
+    "使用场景-应用领域":[
+      "日常使用",
+      "商业应用"
     ]
   }},
   "功能价值":{{
-    "产品反馈-产品优点":[
-      "效果好",
-      "性能稳定"
+    "产品功能-核心能力":[
+      "功能完整性",
+      "创新性"
     ],
-    "产品反馈-产品缺点":[
-      "功能不足",
-      "质量一般"
+    "性能表现-核心指标":[
+      "性能表现",
+      "质量"
     ]
   }},
   "保障价值":{{
-    "服务评价-物流配送":[
-      "配送快",
-      "包装完好"
+    "可靠性-质量保证":[
+      "稳定性",
+      "质量保证"
+    ],
+    "服务支持-客户服务":[
+      "客户服务",
+      "售后支持"
     ]
   }},
   "体验价值":{{
-    "价格感知":[
-      "价格合理",
-      "性价比高"
+    "用户体验-易用性":[
+      "易用性",
+      "界面设计"
+    ],
+    "社区氛围-讨论质量":[
+      "讨论质量",
+      "学习资源"
     ]
   }}
 }}
@@ -985,19 +1057,20 @@ async def analyze_comments_with_tags_skill(
             ])
 
             # 构建标签分析提示 - 分析该 Post 的全部评论
-            tagging_prompt = f"""请基于评价标签体系对以下评论进行标签匹配分析。
+            tagging_prompt = f"""请基于商业和技术讨论标签体系对以下 Reddit 评论进行标签匹配分析。
 
 ## 标签体系
 {tag_system_str}
 
 ## 分析规则
-- 满足标签：保留该标签
+- 匹配标签：保留该标签
 - 无关标签：移除该标签
-- 相反标签：记为 -标签（例如：-价格合理）
+- 负面评价：记为 -标签（例如：-易用性）
 
 ## 帖子信息
 帖子ID: {post.get('note_id', 'unknown')}
 帖子标题: {post.get('title', 'unknown')}
+子版块: {post.get('subreddit', 'unknown')}
 
 ## 帖子评论内容（共 {len(comments)} 条）
 {post_comments_text}
@@ -1007,7 +1080,7 @@ async def analyze_comments_with_tags_skill(
 
 示例：
 ```json
-{{"人群场景": {{"用户需求与痛点-痛点问题": ["购买渠道"]}}, "功能价值": {{}}}}
+{{"人群场景": {{"用户群体-身份特征": ["开发者"]}}, "功能价值": {{"产品功能-核心能力": ["功能完整性"]}}}}
 ```
 
 重要：直接返回JSON，不要包含任何解释文字。

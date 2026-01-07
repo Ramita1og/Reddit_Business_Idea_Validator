@@ -181,11 +181,11 @@ python test_end_to_end.py
 
 ```bash
 # 验证业务创意
-python run_agent.py "在深圳卖陈皮"
+python run_agent.py "AI qwen in usa"
 
 # 或使用其他关键词
-python run_agent.py "AI创业机会"
-python run_agent.py "跨境电商"
+python run_agent.py "AI deepseek r1 in usa"
+python run_agent.py "sell labubu in usa"
 ```
 
 ### 使用说明

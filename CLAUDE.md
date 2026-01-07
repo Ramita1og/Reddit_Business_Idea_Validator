@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an **Agent-based Business Idea Validator** that uses a multi-agent architecture with MCP (Model Context Protocol) servers to validate business ideas through social media research. The system scrapes Xiaohongshu (Little Red Book) for data, analyzes it with LLMs, and generates comprehensive market validation reports.
+This is an **Agent-based Business Idea Validator** that uses a multi-agent architecture with MCP (Model Context Protocol) servers to validate business ideas through social media research. The system supports both **Reddit** and **Xiaohongshu (Little Red Book)** as data sources, analyzes content with LLMs, and generates comprehensive market validation reports.
 
 **Core Workflow:**
 1. Generate search keywords from business idea (LLM)
-2. Scrape relevant posts and comments from Xiaohongshu
+2. Scrape relevant posts and comments (Reddit or Xiaohongshu)
 3. Analyze content for pain points, solutions, and market signals
 4. Generate comprehensive validation report with scores
 
@@ -17,19 +17,27 @@ This is an **Agent-based Business Idea Validator** that uses a multi-agent archi
 ### Installation
 
 ```bash
-cd agent_system
+# Install dependencies
 pip install -r requirements.txt
 ```
 
 ### Configuration
 
-Create/edit `.env` file in `agent_system/`:
+Copy `.env.example` to `.env` and configure:
 
 ```env
 # Required API Keys
 OPENAI_API_KEY="your_openai_api_key"
-OPENAI_BASE_URL="https://api.openai.com/v1"  # or use proxy like https://oa.api2d.net/v1
-TIKHUB_TOKEN="your_tikhub_token"  # For Xiaohongshu data via TikHub
+OPENAI_BASE_URL="https://api.openai.com/v1"  # or use proxy
+
+# Choose ONE data source:
+# Reddit (requires app creation at https://www.reddit.com/prefs/apps)
+REDDIT_CLIENT_ID="your_reddit_client_id"
+REDDIT_CLIENT_SECRET="your_reddit_client_secret"
+REDDIT_USER_AGENT="BusinessResearchAgent/1.0 by your_reddit_username"
+
+# OR Xiaohongshu (via TikHub)
+TIKHUB_TOKEN="your_tikhub_token"
 
 # Optional settings
 SCRAPER_PAGES_PER_KEYWORD=2
@@ -58,11 +66,11 @@ python run_agent.py
 ### Testing
 
 ```bash
-# End-to-end test
-python tests/test_e2e.py
+# Test Reddit API connection
+python test_reddit_connection.py
 
-# Integration test
-python tests/test_integration.py
+# End-to-end test
+python test_end_to_end.py
 ```
 
 ## Architecture
@@ -76,24 +84,26 @@ python tests/test_integration.py
 └─────────────────────────────────────────────────────────┘
                           │
                           ├── KeywordAgent (LLM keyword generation)
-                          ├── ScraperAgent (Xiaohongshu scraping)
+                          ├── ScraperAgent (Reddit/Xiaohongshu scraping)
                           ├── AnalyzerAgent (AI content analysis)
                           └── ReporterAgent (HTML report generation)
                           │
         ┌─────────────────┴─────────────────┐
         │                                     │
    ┌────▼────┐  ┌────────────┐  ┌──────────▼──┐
-   │ XHS MCP │  │   LLM MCP   │  │  Storage    │
-   │ Server  │  │   Server    │  │  MCP Server │
+   │Reddit/XHS│  │   LLM MCP   │  │  Storage    │
+   │MCP Server│  │   Server    │  │  MCP Server │
    └────┬────┘  └────────────┘  └─────────────┘
         │                                     │
-    TikHub API                           OpenAI API
+    Reddit API /                         OpenAI API
+    TikHub API
 ```
 
 ### Key Components
 
 **1. MCP Servers** (`mcp_servers/`)
-- `xhs_server.py`: TikHub API client for Xiaohongshu data (search notes, fetch comments)
+- `reddit_server.py`: Reddit API client via PRAW (search posts, fetch comments)
+- `xhs_server.py`: TikHub API client for Xiaohongshu data
 - `llm_server.py`: OpenAI API wrapper for LLM calls (structured output with Pydantic)
 - `storage_server.py`: File-based checkpoint/state persistence
 
@@ -105,7 +115,7 @@ python tests/test_integration.py
 
 **3. Subagents** (`agents/subagents/`)
 - `keyword_agent.py`: Uses LLM to generate search keywords from business idea
-- `scraper_agent.py`: Scrapes Xiaohongshu posts with comments (via TikHub API)
+- `scraper_agent.py`: Scrapes posts with comments (Reddit or Xiaohongshu)
 - `analyzer_agent.py`: Analyzes posts/comments for market insights
 - `reporter_agent.py`: Generates HTML validation reports
 
@@ -119,7 +129,7 @@ Each subagent has corresponding skills files containing actual business logic:
 **5. Data Models** (`models/`)
 - `agent_models.py`: TaskResult, ExecutionPlan, ProgressUpdate, OrchestratorState
 - `context_models.py`: RunContext, ContextQuery, AgentState
-- `business_models.py`: XhsNoteModel, XhsCommentModel, PostWithComments, XhsPostAnalysis, CombinedAnalysis
+- `business_models.py`: RedditPostModel, XhsNoteModel, CommentModel, Analysis models
 
 ### Execution Flow
 
@@ -172,7 +182,7 @@ All agents and MCP servers use async/await. The main entry point `run_agent.py` 
 MCP servers are started before Orchestrator and passed via `mcp_clients` dict:
 ```python
 mcp_clients = {
-    "xhs": xhs_server,
+    "reddit": reddit_server,  # or "xhs" for Xiaohongshu
     "llm": llm_server,
     "storage": storage_server
 }
@@ -211,8 +221,8 @@ Structured logging via `agents/logging_config.py`:
 
 ## Data Models
 
-**PostWithComments** (models/business_models.py:65)
-- Critical model that combines note data + embedded comments
+**PostWithComments** (models/business_models.py)
+- Critical model that combines post data + embedded comments
 - Used for unified analysis (post + comments together)
 - Replaces separate post/comment analysis
 
@@ -230,16 +240,16 @@ Structured logging via `agents/logging_config.py`:
 All config centralized in `agents/config.py`:
 - Supports .env files (auto-detected in multiple locations)
 - Nested config access: `config.get('mcp.xhs.auth_token')`
-- Type-safe config objects: `XHSMCPConfig`, `LLMConfig`, etc.
+- Type-safe config objects: `XHSMCPConfig`, `LLMConfig`, `RedditMCPConfig`, etc.
 
 **Config file search order:**
 1. `.env` in current directory
-2. `agent_system/.env`
-3. Project root `.env`
+2. Project root `.env`
 
 **Required environment variables:**
 - `OPENAI_API_KEY`: OpenAI API key (or compatible proxy)
-- `TIKHUB_TOKEN`: TikHub token for Xiaohongshu data
+- `REDDIT_CLIENT_ID` + `REDDIT_CLIENT_SECRET` + `REDDIT_USER_AGENT` (for Reddit)
+- **OR** `TIKHUB_TOKEN` (for Xiaohongshu)
 
 **Optional variables:**
 - `OPENAI_BASE_URL`: Alternative API endpoint
@@ -266,7 +276,7 @@ Edit `agents/skills/analyzer_skills.py`:
 
 ### Adding New MCP Tools
 
-1. Add method to appropriate MCP server class (e.g., `XHSMCPServer`)
+1. Add method to appropriate MCP server class (e.g., `RedditMCPServer`)
 2. Decorate with `@mcp_tool()`
 3. Register in server's `list_tools()` method
 4. Call from agent via `await self.mcp_clients["server_name"].call_tool(...)`
@@ -279,18 +289,22 @@ python run_agent.py 测试创意
 # Select 'y' for fast mode
 
 # Full end-to-end test
-python tests/test_e2e.py
+python test_end_to_end.py
+
+# Test Reddit API connection
+python test_reddit_connection.py
 ```
 
 ## Troubleshooting
 
 **"ModuleNotFoundError"**
-- Ensure you're in `agent_system/` directory
+- Ensure you're in the project root directory
 - Run `pip install -r requirements.txt`
 
 **"401 Unauthorized" or "Invalid API Key"**
-- Check `.env` file exists in `agent_system/`
+- Check `.env` file exists in project root
 - Verify API keys are correct (no extra spaces)
+- For Reddit: Ensure app type is "script" at https://www.reddit.com/prefs/apps
 - For TikHub: Token should include `==` suffix
 
 **Timeout errors**
@@ -299,19 +313,19 @@ python tests/test_e2e.py
 - Check network connectivity to APIs
 
 **Empty results**
-- Check TikHub API quota/balance
-- Verify keyword returns results on Xiaohongshu
+- Check API quota/balance
+- Verify keyword returns results on the platform
 - Check logs for API errors
 
 ## File Structure Notes
 
-**Important:** The project structure has two parallel systems:
-1. **Agent System** (`agent_system/`): New agent-based architecture (this file)
-2. **Legacy System** (`business_validator/`): Original monolithic implementation
+**Important:** The project structure contains:
+1. **Agent System** (`agents/`, `mcp_servers/`): Multi-agent architecture with MCP servers
+2. **Legacy System** (`business_validator/`): Original monolithic implementation (if present)
 
 They share:
 - Pydantic models in `models/business_models.py`
 - Report generation templates
 - Configuration patterns
 
-When working in `agent_system/`, focus on the agent-based workflow and MCP servers. The legacy code is maintained for compatibility.
+When working in this codebase, focus on the agent-based workflow and MCP servers.
